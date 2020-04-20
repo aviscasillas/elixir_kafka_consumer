@@ -1,21 +1,31 @@
 # ElixirKafkaConsumer
 
-**TODO: Add description**
+This is just a project to play a bit with Elixir and see how it feels consuming from Kafka.
+
+It's a generic implementation of a Kafka consumer that:
+1. Grabs messages from a given kafka topic.
+2. Updates the corresponding entity state in a DB.
+
+**NOTE** that this implementation goes under the assumptions listed below: 
+- The topic represents an entity.
+- The entity is identified by the message `key`.
+- The entity body is represented by the message `value`.
+- The topic is configured with `compaction` strategy.
+
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `elixir_kafka_consumer` to your list of dependencies in `mix.exs`:
-
-```elixir
-def deps do
-  [
-    {:elixir_kafka_consumer, "~> 0.1.0"}
-  ]
-end
+``` bash
+git clone https://github.com/aviscasillas/elixir_kafka_consumer.git
+cd elixir_kafka_consumer
+mix deps.get
+cp .env.local.sample .env.local # Update ENV variables tha fit your needs
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/elixir_kafka_consumer](https://hexdocs.pm/elixir_kafka_consumer).
+## Running it locally
+
+``` bash
+# It will open an iex console and run the consumer using the .env.local environment
+local-run
+```
 
