@@ -4,6 +4,7 @@ defmodule ElixirKafkaConsumer.Application do
   def start(_type, _args) do
     import Supervisor.Spec
     children = [
+      Avrora,
       worker(Kaffe.Consumer, [])
     ]
     opts = [strategy: :one_for_one, name: GenericConsumer.Supervisor]

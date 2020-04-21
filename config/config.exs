@@ -13,3 +13,6 @@ config :kaffe, consumer: [
   message_handler: GenericConsumer,
   start_with_earliest_message: true
 ]
+
+config :avrora,
+  registry_url: System.get_env("REGISTRY_URL")
