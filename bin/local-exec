@@ -3,4 +3,4 @@
 source .env.local
 export $(cut -d= -f1 .env.local)
 
-iex -S mix
+$*

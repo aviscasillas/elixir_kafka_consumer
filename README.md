@@ -15,7 +15,6 @@ It's a generic implementation of a Kafka consumer that:
 
 
 ## Installation
-
 ``` bash
 git clone https://github.com/aviscasillas/elixir_kafka_consumer.git
 cd elixir_kafka_consumer
@@ -24,12 +23,17 @@ cp .env.local.sample .env.local # Update ENV variables tha fit your needs
 ```
 
 ## Running it locally
-
-``` bash
+```bash
 # Startup postgres database
 docker-compose up
+```
 
-# It will open an iex console and run the consumer using the .env.local environment
-local-run
+``` bash
+local-exec mix ecto.create
+local-exec mix ecto.migrate
+```
+
+``` bash
+local-exec iex -S mix
 ```
 
