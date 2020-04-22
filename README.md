@@ -19,7 +19,7 @@ It's a generic implementation of a Kafka consumer that:
 git clone https://github.com/aviscasillas/elixir_kafka_consumer.git
 cd elixir_kafka_consumer
 mix deps.get
-cp .env.local.sample .env.local # Update ENV variables tha fit your needs
+cp .env.local.sample .env.local # Update ENV variables to fit your needs
 ```
 
 ## Running it locally
