@@ -1,5 +1,5 @@
 defmodule ElixirKafkaConsumer.GenericConsumer do
-  def handle_message(%{key: key, value: value} = message) do
+  def handle_message(%{key: key, value: value}) do
     with {:ok, decoded_value} <- decode(value) do
       %ElixirKafkaConsumer.GenericRecord{guid: key, body: decoded_value |> Poison.decode!}
       |> ElixirKafkaConsumer.Repo.insert
