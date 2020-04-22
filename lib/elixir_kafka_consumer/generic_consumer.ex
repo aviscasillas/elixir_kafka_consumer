@@ -1,4 +1,4 @@
-defmodule GenericConsumer do
+defmodule ElixirKafkaConsumer.GenericConsumer do
   def handle_message(%{key: key, value: value} = message) do
     IO.inspect(message)
 

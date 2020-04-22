@@ -4,6 +4,7 @@ defmodule ElixirKafkaConsumer.Application do
   def start(_type, _args) do
     import Supervisor.Spec
     children = [
+      ElixirKafkaConsumer.Repo,
       Avrora,
       worker(Kaffe.Consumer, [])
     ]
