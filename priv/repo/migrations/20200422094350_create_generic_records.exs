@@ -3,8 +3,10 @@ defmodule ElixirKafkaConsumer.Repo.Migrations.CreateGenericRecords do
 
   def change do
     create table(:generic_records) do
-      add :guid, :string, unique: true
+      add :guid, :string
       add :body, :map
     end
+
+    create unique_index(:generic_records, [:guid])
   end
 end
