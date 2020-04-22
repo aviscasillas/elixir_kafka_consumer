@@ -1,9 +1,9 @@
 defmodule ElixirKafkaConsumer.GenericConsumer do
   def handle_message(%{key: key, value: value} = message) do
-    IO.inspect(message)
-
     with {:ok, decoded_value} <- decode(value) do
-      IO.puts("#{key}: #{inspect(decoded_value)}")
+      %ElixirKafkaConsumer.GenericRecord{guid: key, body: decoded_value |> Poison.decode!}
+      |> ElixirKafkaConsumer.Repo.insert
+
       :ok
     else
       err -> err
