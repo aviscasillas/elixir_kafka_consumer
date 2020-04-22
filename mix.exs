@@ -28,7 +28,7 @@ defmodule ElixirKafkaConsumer.MixProject do
       {:avrora, "~> 0.9"},
       {:ecto_sql, "~> 3.0"},
       {:postgrex, ">= 0.0.0"},
-      {:poison, "~> 3.1"}
+      {:jason, "~> 1.2"}
     ]
   end
 end
