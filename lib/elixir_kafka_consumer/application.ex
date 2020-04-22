@@ -8,7 +8,7 @@ defmodule ElixirKafkaConsumer.Application do
       Avrora,
       worker(Kaffe.Consumer, [])
     ]
-    opts = [strategy: :one_for_one, name: GenericConsumer.Supervisor]
+    opts = [strategy: :one_for_one, name: ElixirKafkaConsumer.GenericConsumer.Supervisor]
     Supervisor.start_link(children, opts)
   end
 end
