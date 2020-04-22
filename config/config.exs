@@ -20,7 +20,8 @@ config :kaffe, consumer: [
   topics: System.get_env("TOPICS", "placeholder-topic") |> String.split(","),
   consumer_group: System.get_env("CONSUMER_GROUP"),
   message_handler: ElixirKafkaConsumer.GenericConsumer,
-  start_with_earliest_message: true
+  start_with_earliest_message: true,
+  max_bytes: 500_000
 ]
 
 config :avrora,

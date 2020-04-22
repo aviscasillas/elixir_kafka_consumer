@@ -1,5 +1,12 @@
 defmodule ElixirKafkaConsumer.GenericConsumer do
-  def handle_message(%{key: key, value: value}) do
+  def handle_messages(messages) do
+    for message <- compact(messages) do
+      process_message(message)
+    end
+    :ok
+  end
+
+  def process_message(%{key: key, value: value}) do
     if value |> tombstone? do
       record = ElixirKafkaConsumer.Repo.get_by(ElixirKafkaConsumer.GenericRecord, guid: key)
       if record != nil do
@@ -15,6 +22,10 @@ defmodule ElixirKafkaConsumer.GenericConsumer do
         err -> err
       end
     end
+  end
+
+  defp compact(messages) do
+    messages |> Enum.reverse |> Enum.uniq_by(fn msg -> msg.key end)
   end
 
   defp sanitize(value) do
