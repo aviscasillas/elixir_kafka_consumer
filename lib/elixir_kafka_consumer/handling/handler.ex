@@ -2,17 +2,22 @@ defmodule ElixirKafkaConsumer.Handler do
   alias ElixirKafkaConsumer.Service, as: Service
   alias ElixirKafkaConsumer.Record, as: Record
 
+  @max_concurrency Application.fetch_env!(:elixir_kafka_consumer, :max_concurrency)
+
   def handle_messages(messages) do
     messages
     |> Enum.reverse
-    |> Enum.uniq_by(fn msg -> msg.key end)
-    |> Enum.each(fn msg ->
-      msg
-      |> to_domain!
-      |> Service.process_record
-    end)
+    |> Enum.uniq_by(&(&1.key))
+    |> Task.async_stream(__MODULE__, :handle_message, [], max_concurrency: @max_concurrency)
+    |> Stream.run
 
     :ok
+  end
+
+  def handle_message(message) do
+    message
+    |> to_domain!
+    |> Service.process_record
   end
 
   defp to_domain!(%{key: key, value: value}) do
