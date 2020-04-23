@@ -1,6 +1,6 @@
 use Mix.Config
 
-db_pool_size = System.get_env("DB_POOL_SIZE") |> String.to_integer
+db_pool_size = System.get_env("DB_POOL_SIZE", "10") |> String.to_integer
 
 config :elixir_kafka_consumer, ElixirKafkaConsumer.Repo,
   database: System.get_env("DB_NAME"),
