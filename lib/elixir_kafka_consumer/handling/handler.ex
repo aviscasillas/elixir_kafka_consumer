@@ -1,4 +1,7 @@
 defmodule ElixirKafkaConsumer.Handler do
+  alias ElixirKafkaConsumer.Service, as: Service
+  alias ElixirKafkaConsumer.Record, as: Record
+
   def handle_messages(messages) do
     messages
     |> Enum.reverse
@@ -6,14 +9,14 @@ defmodule ElixirKafkaConsumer.Handler do
     |> Enum.each(fn msg ->
       msg
       |> to_domain!
-      |> ElixirKafkaConsumer.Service.process_record
+      |> Service.process_record
     end)
 
     :ok
   end
 
   defp to_domain!(%{key: key, value: value}) do
-    %ElixirKafkaConsumer.Record{guid: key, body: value |> to_domain_value}
+    %Record{guid: key, body: value |> to_domain_value}
   end
 
   defp to_domain_value(value) do
