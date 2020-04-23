@@ -19,7 +19,7 @@ config :kaffe, consumer: [
   end),
   topics: System.get_env("TOPICS", "placeholder-topic") |> String.split(","),
   consumer_group: System.get_env("CONSUMER_GROUP"),
-  message_handler: ElixirKafkaConsumer.GenericConsumer,
+  message_handler: ElixirKafkaConsumer.Handler,
   start_with_earliest_message: true,
   max_bytes: 500_000
 ]

@@ -1,4 +1,4 @@
-defmodule ElixirKafkaConsumer.GenericRecord do
+defmodule ElixirKafkaConsumer.GenericRecordSchema do
   use Ecto.Schema
 
   schema "generic_records" do

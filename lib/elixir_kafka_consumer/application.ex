@@ -12,7 +12,7 @@ defmodule ElixirKafkaConsumer.Application do
       }
     ]
 
-    opts = [strategy: :one_for_one, name: ElixirKafkaConsumer.GenericConsumer.Supervisor]
+    opts = [strategy: :one_for_one, name: ElixirKafkaConsumer.Handler.Supervisor]
     Supervisor.start_link(children, opts)
   end
 end
