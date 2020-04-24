@@ -19,6 +19,8 @@ defmodule ElixirKafkaConsumer.Handler do
             group_id: @consumer_group,
             topics: @topics,
             max_bytes: 500_000,
+            # `after_fetch` callback added in a personal fork:
+            # => https://github.com/aviscasillas/broadway_kafka
             after_fetch: fn(messages) ->
               messages
               |> Enum.reverse
