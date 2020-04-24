@@ -2,7 +2,7 @@
 
 > This is just a project to play a bit with Elixir and see how it feels consuming from Kafka.
 
-A generic, **non-blocking**, Kafka consumer implemented on top of [Kaffe](https://github.com/spreedly/kaffe), [Avrora](https://github.com/Strech/avrora) and [ecto](https://github.com/elixir-ecto/ecto).
+A generic, **non-blocking**, Kafka consumer implemented on top of [BroadwayKafka](https://github.com/dashbitco/broadway_kafka), [Avrora](https://github.com/Strech/avrora) and [ecto](https://github.com/elixir-ecto/ecto).
 
 ## What?
 **A generic implementation of a Kafka consumer:**

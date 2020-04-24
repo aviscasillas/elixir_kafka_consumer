@@ -5,14 +5,9 @@ defmodule ElixirKafkaConsumer.Application do
     children = [
       ElixirKafkaConsumer.Repo,
       Avrora,
-      %{
-        id: Kaffe.GroupMemberSupervisor,
-        start: {Kaffe.GroupMemberSupervisor, :start_link, []},
-        type: :supervisor
-      }
+      {ElixirKafkaConsumer.Handler, []}
     ]
 
-    opts = [strategy: :one_for_one, name: ElixirKafkaConsumer.Handler.Supervisor]
-    Supervisor.start_link(children, opts)
+    Supervisor.start_link(children, strategy: :one_for_one)
   end
 end

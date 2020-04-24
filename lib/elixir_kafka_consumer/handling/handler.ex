@@ -1,27 +1,49 @@
 defmodule ElixirKafkaConsumer.Handler do
+  use Broadway
+
   alias ElixirKafkaConsumer.Service, as: Service
   alias ElixirKafkaConsumer.Record, as: Record
 
-  @max_concurrency Application.fetch_env!(:elixir_kafka_consumer, :max_concurrency)
+  @db_pool_size Application.fetch_env!(:elixir_kafka_consumer, :db_pool_size)
+  @brokers Application.fetch_env!(:elixir_kafka_consumer, :brokers)
+  @topics Application.fetch_env!(:elixir_kafka_consumer, :topics)
+  @consumer_group Application.fetch_env!(:elixir_kafka_consumer, :consumer_group)
 
-  def handle_messages(messages) do
-    messages
-    |> Enum.reverse
-    |> Enum.uniq_by(&(&1.key))
-    |> Task.async_stream(__MODULE__, :handle_message, [], max_concurrency: @max_concurrency)
-    |> Stream.run
-
-    :ok
+  def start_link(_opts) do
+    Broadway.start_link(__MODULE__,
+      name: __MODULE__,
+      producer: [
+        module: {
+          BroadwayKafka.Producer, [
+            hosts: @brokers,
+            group_id: @consumer_group,
+            topics: @topics,
+            max_bytes: 5_000_000
+          ]},
+        concurrency: 2
+      ],
+      processors: [
+        default: [
+          concurrency: @db_pool_size |> div(2)
+        ]
+      ]
+    )
   end
 
-  def handle_message(message) do
+  @impl true
+  def handle_message(_, message, _) do
     message
     |> to_domain!
     |> Service.process_record
+
+    message
   end
 
-  defp to_domain!(%{key: key, value: value}) do
-    %Record{guid: key, body: value |> to_domain_value}
+  defp to_domain!(message) do
+    %Record{
+      guid: message.metadata.key,
+      body: message.data |> to_domain_value
+    }
   end
 
   defp to_domain_value(value) do
