@@ -24,7 +24,7 @@ defmodule ElixirKafkaConsumer.MixProject do
     [
       # {:dep_from_hexpm, "~> 0.3.0"},
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
-      {:broadway_kafka, "~> 0.1.1"},
+      {:broadway_kafka, git: "https://github.com/aviscasillas/broadway_kafka.git"},
       {:avrora, "~> 0.9"},
       {:ecto_sql, "~> 3.0"},
       {:postgrex, ">= 0.0.0"},
